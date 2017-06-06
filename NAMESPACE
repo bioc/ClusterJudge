@@ -1,0 +1,6 @@
+exportPattern("^[[:alpha:]]+")
+importFrom(infotheo, entropy)
+import(lattice, latticeExtra, httr, jsonlite)
+importFrom("stats", "sd")
+importFrom("utils", "read.delim", "read.table")
+importFrom("graphics", "hist", "plot")
