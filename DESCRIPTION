@@ -4,7 +4,7 @@ Title: Judging Quality of Clustering Methods using Mutual Information
 Version: 0.99.0
 Date: 2017-02-15
 Author: Adrian Pasculescu
-Maintainer:  <pasculescu@lunenfeld.ca>
+Maintainer:  Adrian Pasculescu <pasculescu@lunenfeld.ca>
 Description: ClusterJudge implements the functions, examples and other software published as an algorithm by Gibbons, F.D. and Roth F.P., (2002) in
     "Judging the Quality of Gene Expression-Based Clustering Methods Using Gene Annotation" 
     Genome Research, vol. 12, pp1574-1581.
