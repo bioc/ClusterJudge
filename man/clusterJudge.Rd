@@ -2,7 +2,7 @@
 \alias{clusterJudge}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-  judges clustering using an an entity.attribute table 
+  judges clustering using an entity.attribute table 
 }
 \description{
     calculates the sum of mutual information between clusters and each of the attributes
