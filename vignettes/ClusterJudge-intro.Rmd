@@ -57,39 +57,47 @@ references:
   title: 'Elements of information theory'
 ---
 
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+devtools::load_all('.')
+```
+
 ## Introduction
-Clustering can be judged based on external information.
-For example when the clustered entities posses attributes, the total mutual information between
-the clustering and each of the important attributes of entities might be helpful.
-A `god` clustering should have a pronounced decrease of the total mutual information 
-when the of number of random swaps of entities between clusters is increased [@GibRoth2002].
+The quality of a cluster analysis can be judged based on external information.
+For example when the clustered entities possess attributes, the total mutual information between
+the clustering and each of the important and non-redundant attributes of entities might be helpful.
+Gene Ontology is an example of a system of attributes that can help in assessing gene clustering resulting 
+from genomics or proteomics experiments.  
+A clustering that `agrees well` with a system of attributes should have a pronounced decrease of 
+the total mutual information when the of number of random swaps of entities between clusters 
+is increased [@GibRoth2002].
 
-For example Gene Ontology attributes can help in assessing gene clustering resulting from 
-genomics or proteomics experiments.
 
-The following simple steps are needed for judging a clustering:
-1. Obtain the clusters as a a structure containing entitities and their cluster ids
-2. Obtain the entitity-attribute associations and Verify the entitity-attribute associations for consistency
-3. In most of the cases one can consolidate (reduce) the number of attributes
-by using a set of _uncertainty_ levels 
-4. 'Judge' the original clustreing versus some random changes applied on the original one
+The following simple steps must be performed to evaluate a clustering using ClusterJudge: 
+1. Obtain the clusters as a a structure containing entitities and their cluster IDs
+2. Obtain the entitity-attribute associations and verify the entitity-attribute associations for consistency
+3. . In most cases, the number of attributes can be consolidated (reduced) by using a set 
+of _uncertainty_ levels  
+4. Judge the original clustering versus clustering of random changes that are applied to the original data
 
 
 ## Obtaining the clustering
 
 In most of the cases the clustering is obtained from experimental data after 
-applying some statistical methods such as k-means or cutting a hierarchical clustering at a predifined 'height'.
+applying some statistical methods such as k-means or cutting a hierarchical clustering at a predefined 'height'.
 
-The following example extracts the Yeast cell cycle clustering of genes from [@Cho1998] [@Taivasoie1999]
-```{r}
+The following example extracts the Yeast cell cycle clustering of genes related to the Yeast cell 
+cycle  [@Cho1998] [@Taivasoie1999]:
+```{r  warning=FALSE, message=FALSE}
 library('yeastExpData')
+```
+```{r echo=TRUE}
 data(ccyclered)
 head(ccyclered)
 ```
 
-The clustering should not contain ambiguites: i.e. one entity (gene) should be assigned to just one cluster
-(and no NA !)
-For this package the clusters must be organized as a named vector:
+The clustering should not contain any ambiguites ( i.e. one entity should be assigned to just one cluster)
+and no NA should be present.
+For this package, the clusters must be organized as a named vector:
 ```{r}
 clusters <- ccyclered$Cluster
 ###  convert from Gene names to the new standard of Saccharomyces Genome Database (SGD) gene ids
@@ -98,17 +106,17 @@ names(clusters) <- ccyclered$SGDID
 str(clusters)
 ```
 
-Note that we modified the names of the genes to match the names of the entities in 
-the Gene Ontology (see next section).
+Note that, in this example, we modified the names of the genes to match the names of entities in 
+the Gene Ontology data (see next section).
 
 
 ## Obtaining Entity Attribute associations
 
 
-In the case of genomics or proteomics data, one source of attributes is the Gene Ontology (http://www.geneontology.org/).
-For Yeast Gene Ontology attributes can be downloaded also from the [Saccharomyces Genome Database (SGD)]
+For genomics or proteomics data, one source of attributes is the Gene Ontology (http://www.geneontology.org/).
+For Yeast Gene Ontology attributes can also be downloaded from the [Saccharomyces Genome Database (SGD)]
 (http://www.yeastgenome.org/)
-In ClusterJudge R pacakge there is an already downloaded mapping of Yeast genes to attributes: 
+In the ClusterJudge R package there is already a downloaded mapping of Yeast genes to attributes: 
 
 ```{r, fig.show='hold', echo=TRUE}
 data(Yeast.GO.assocs);
@@ -117,16 +125,15 @@ head(Yeast.GO.assocs);
 validate.association(Yeast.GO.assocs)
 ```
 
-A function to download a `fresh` copy of the mapping is also available as a function *download.Yeast.GO.mapping()* 
+The *download.Yeast.GO.mapping()* function is also available to download a fresh copy of the mapping. 
 
-_validate.association()_ function quickly verifies if the input structure has two columns, 
-if there are no NAs or NULLs and if thre are no duplicated associations.
+The _validate.association()_ function quickly verifies if the input structure has two columns, 
+if there are no NAs or NULLs and if there are no duplicated associations.
 
 ## Consolidating Entity-Attribute associations
-In some cases the attributes might not bring additional useful information.
- * For example an attribute can be too specific: assigned to one or two genes (can be seen as simply 
-a new name of a gene).
- * In some other cases two or more attributes can be very correlated: appear on almost the same set of genes.
+In some cases, the attributes may not bring additional useful information. For example, an attribute 
+may be too specific as it is only assigned to one or two genes (e.g. it may simply be a new name of a gene). 
+In other cases, two or more attributes may be very correlated and appear on almost the same set of genes.
 
 For the first case a consolidated association will ignore those attributes that belong to very few genes 
 (*min.entities.per.attr*) 
@@ -142,9 +149,9 @@ Yeast.GO.assocs.cons1 <- consolidate.entity.attribute(
 dim(Yeast.GO.assocs)
 dim(Yeast.GO.assocs.cons1) ### shows reduction in the number of associations
 ``` 
-For the second case we use the pre-calculated mutual information [@Cover1991] between attributes and impose some maximum of 
-_uncertainty_ levels. 
-Where uncertainty is defined as mutual information divided by the maximum of mutual information.
+For the second case we use the pre-calculated mutual information [@Cover1991] between attributes and impose 
+a maximum _uncertainty_ level where uncertainty is defined as mutual information divided by the maximum 
+of mutual information.
 
 ```{r, fig.width=6, fig.height=4}
 data(mi.GO.Yeast)
@@ -162,7 +169,7 @@ of clusters will be performed.
 
 
 ## Calculating the mutual information 
-In case the entity-attributes associations are downloaded from other organisms or other sources
+In the case where the entity-attributes associations are downloaded from other organisms or other sources,
 mutual information can be calculated using this function: *attribute.mut.inf* :
 
 ```{r}
@@ -182,13 +189,13 @@ where H is the entropy.
 
 
 ## Judging the clustering for selected `uncertainty` levels
-We use the _clusters_ named vector prepared above and one of the consolidated entity-attribute
-associations (for example the one at 0.001 level of Uncertainty.
-The _ClusterJudge_ will swap at random more and more entities between clusters and calculate
-and plot the new total mutual information. If the total mutual information decreases by
-increasing the number of random swaps we can colclude that there is a good agreement between
-the clustering of experimental data and the ensmble of information provided by the
-entity-attribute assocoations.
+The _clusters_ named vector prepared above and one of the consolidated entity-attribute
+associations (for example the one at 0.001 level of Uncertainty) are needed at this step.
+The _ClusterJudge_ will swap at random more and more entities between clusters and will calculate
+and plot the new total mutual information for each iteration. 
+If the total mutual information decreases by increasing the number of random swaps we can conclude 
+that there is a good agreement between the clustering of experimental data and the ensemble of information 
+provided by the entity-attribute associations.
 
 ```{r, fig.width=6, fig.height=4}
 mi.by.swaps<-clusterJudge(
@@ -198,9 +205,9 @@ mi.by.swaps<-clusterJudge(
 `Systematic determination of genetic network architecture. Nat Genet. 1999`')  
 ```
 
-The most interesting cases might be when very reliable experimental data and sound clustering
-contradict information accumulated in time into entity-attribute associations. These cases
-might suggest novel discoveries.
+The oposite case (total mutual information does not decrease), and only when experimental data and clustering
+are very reliable, might suggest novel discoveries that contradict information accumulated in time into 
+entity-attribute associations.
 
 ## References
 
