@@ -77,7 +77,7 @@ The following simple steps must be performed to evaluate a clustering using Clus
 2. Obtain the entitity-attribute associations and verify the entitity-attribute associations for consistency
 3. . In most cases, the number of attributes can be consolidated (reduced) by using a set 
 of _uncertainty_ levels  
-4. Judge the original clustering versus clustering of random changes that are applied to the original data
+4. 'Judge' the original clustering versus clustering of random changes that are applied to the original data
 
 
 ## Obtaining the clustering
