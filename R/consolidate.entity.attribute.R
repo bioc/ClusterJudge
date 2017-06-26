@@ -38,6 +38,7 @@ function(entity.attribute, min.entities.per.attr, mut.inf=NULL,  U.limit = c(0.8
             ,scales=list(x=list(log=10),y=list(tick.number=11)), alpha=0.9
         ,xscale.components = xscale.components.log10ticks
         ,xlab='Uncertainty (MutInf/max(MutInf)\n(red: selected limits and number of removed elements)'
+        ,ylab='Percent of Total (Number of attribute pairs) '
         ,panel=function(x,...){
         	panel.abline(h=seq(0,100,5),lty=3,alpha=0.8)
         	panel.histogram(x,...)
@@ -56,22 +57,23 @@ function(entity.attribute, min.entities.per.attr, mut.inf=NULL,  U.limit = c(0.8
 
    entity.attribute.list<-list()
    for(u.crt in U.limit){
-  crt.pairs <- U.names.v[Uv>=u.crt]
-  entity.attribute.crt <- entity.attribute
-  ###  see in how many pairs is each attribute
-  while( length(crt.pairs)>0 ){
-    crt.attribs <- unique(unlist(strsplit(crt.pairs,';')))
-    crt.attribs.count <- table(crt.attribs)[order(table(crt.attribs),decreasing=TRUE)]
-  	attr.1  <- names(crt.attribs.count)[1]
-  	attr.2  <- sub(';','',sub(attr.1,'',grep(attr.1, crt.pairs,value=TRUE))) ### list of the second attributes pairing attr.1
-  	### get rid of the second GO attribute from gene.attribute.u and from the crt.pairs
-  	entity.attribute.crt <- entity.attribute.crt[entity.attribute.crt[,2] %in% setdiff(entity.attribute.crt[,2], attr.2), ]
-  	crt.pairs <- grep(paste(attr.2,collapse='|'),crt.pairs,invert=TRUE,value=TRUE) ### ignore the pairs that have and attribute in the attr.2 array
-  	cat('.')
-  }
-  cat("\n");
-  print(paste('For the uncertainty limit',u.crt,'removed:',length(unique(entity.attribute[,2]))-length(unique(entity.attribute.crt[,2])),'attributes'))
-  entity.attribute.list[[as.character(u.crt)]]<-entity.attribute.crt
+      crt.pairs <- U.names.v[Uv>=u.crt]
+      entity.attribute.crt <- entity.attribute
+      ###  see in how many pairs is each attribute
+      i <- 0
+      while( length(crt.pairs)>0 ){
+        crt.attribs <- unique(unlist(strsplit(crt.pairs,';')))
+        crt.attribs.count <- table(crt.attribs)[order(table(crt.attribs),decreasing=TRUE)]
+      	attr.1  <- names(crt.attribs.count)[1]
+      	attr.2  <- sub(';','',sub(attr.1,'',grep(attr.1, crt.pairs,value=TRUE))) ### list of the second attributes pairing attr.1
+      	### get rid of the second GO attribute from gene.attribute.u and from the crt.pairs
+      	entity.attribute.crt <- entity.attribute.crt[entity.attribute.crt[,2] %in% setdiff(entity.attribute.crt[,2], attr.2), ]
+     	crt.pairs <- grep(paste(attr.2,collapse='|'),crt.pairs,invert=TRUE,value=TRUE) ### ignore the pairs that have and attribute in the attr.2 array
+      	if((i %% 10) == 0) cat('.'); i <- i+1
+      }
+      cat("\n");
+      print(paste('For the uncertainty limit',u.crt,'removed:',length(unique(entity.attribute[,2]))-length(unique(entity.attribute.crt[,2])),'attributes'))
+      entity.attribute.list[[as.character(u.crt)]]<-entity.attribute.crt
    }
 
    return(entity.attribute.list)	
