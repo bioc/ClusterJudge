@@ -1,56 +1,51 @@
 \name{clusterJudge}
 \alias{clusterJudge}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-  judges clustering using an entity.attribute table 
+    judges clustering using an entity.attribute table 
 }
 \description{
     calculates the sum of mutual information between clusters and each of the attributes
-  For example if we note mutual information between Clusters and each Attribute i as: 
-     MI(C,Ai)  (where C is the variable that has the cluster ids)
-  then, for all attributes (assuming independence) it records the sum:
-     MI(C,A) = Sum(MI(C,Ai)) = n*E(C)+sum(E(Ai))-sum(E(C,Ai))
+    For example if we note mutual information between Clusters and each Attribute i as: 
+        MI(C,Ai)  (where C is the variable that has the cluster ids)
+    then, for all attributes (assuming independence) it records the sum:
+        MI(C,A) = Sum(MI(C,Ai)) = n*E(C)+sum(E(Ai))-sum(E(C,Ai))
 
-  Then swaps elements between a random pair of clusters and repeats the above calculations.
-  The swapping is repeated  2 times, 4 times, 8 times ... up to 2^12 times
-  Finaly a complete shuffle of clustering is applied.
-  The resulting variation of the total mutual information as a fraction of the initial value
-  is ploted against the increasing number of swaps (and the final suffling)
-  A god clustering should have a pronounced decrease of the total mutual information 
-  when the of number of swaps is increased.
+    Then swaps elements between a random pair of clusters and repeats the above calculations.
+    The swapping is repeated  2 times, 4 times, 8 times ... up to 2^12 times
+    Finaly a complete shuffle of clustering is applied.
+    The resulting variation of the total mutual information as a fraction of the initial value
+    is ploted against the increasing number of swaps (and the final suffling)
+    A god clustering should have a pronounced decrease of the total mutual information 
+    when the of number of swaps is increased.
 }
 \usage{
-clusterJudge(clusters, entity.attribute, plot.notes = "")
+    clusterJudge(clusters, entity.attribute, plot.notes = "")
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{clusters}{
-     a named vectors of integers (or a factor). 
+    \item{clusters}{
+    a named vectors of integers (or a factor). 
     The names (or the levels of the factor) must match some (as many as possible) 
     of the entities of the entity.attribute structure.
 }
-  \item{entity.attribute}{
-     data frame or matrix with 2 columns 
+    \item{entity.attribute}{
+    data frame or matrix with 2 columns 
 	The assumption is that first column represent some `entities` like gene names or gene ids. 
-  And the second column represents `attributes` of entities (for example Gene Ontology ID 'GO:0007260' 
+    And the second column represents `attributes` of entities (for example Gene Ontology ID 'GO:0007260' 
     which is `tyrosine phosphorylation of STAT protein`)
-  Usually this is a consolidated entity.attribute where the attributes with very low number of entities 
-  or with very low mutual information have been removed (see consolidate.entity.attribute 
-  and the definition of Uncertainty on attributes mutual information)   
+    Usually this is a consolidated entity.attribute where the attributes with very low number of entities 
+    or with very low mutual information have been removed (see consolidate.entity.attribute 
+    and the definition of Uncertainty on attributes mutual information)   
 }
-  \item{plot.notes}{
-     a string that will be added to the plot as explanation of what clustering represents.
+    \item{plot.notes}{
+    a string that will be added to the plot as explanation of what clustering represents.
 }
-}
-\details{
-%%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-  a data.frame
-  with the number of swapps between clusters used for randomization
-  and the total mutual information calculated after each of the sets of swaps
-  The last value is for the full shuffle of the clusters. 
-  Since the shuffle is using the base \code{sample} function witout setting a random seed, the last value will vary.
+    a data.frame
+    with the number of swapps between clusters used for randomization
+    and the total mutual information calculated after each of the sets of swaps
+    The last value is for the full shuffle of the clusters. 
+    Since the shuffle is using the base \code{sample} function witout setting a random seed, the last value will vary.
 }
 \references{
     Gibbons, F.D. and Roth F.P., (2002)
@@ -58,21 +53,17 @@ clusterJudge(clusters, entity.attribute, plot.notes = "")
     Genome Research, vol. 12, pp1574-1581.
 }
 \author{
-  Adrian Pasculescu
+    Adrian Pasculescu
 }
 \note{
-  a dot is printed on the console after each of the 12 sets of swaps
+    a dot is printed on the console after each of the 12 sets of swaps
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
- \code{\link{consolidate.entity.attribute}}
- \code{\link{help}}
+    \code{\link{consolidate.entity.attribute}}
+    \code{\link{help}}
 }
 \examples{
-
 
 library('yeastExpData')
 data(ccyclered)
@@ -104,7 +95,5 @@ mi.by.swaps<-clusterJudge(clusters, entity.attribute=Yeast.GO.assocs.cons[["0.00
 `Systematic determination of genetic network architecture. Nat Genet. 1999`')  
 
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ attribute.mut.inf }% __ONLY ONE__ keyword per line
-\keyword{ consolidate.entity.attribute }% use one of  RShowDoc("KEYWORDS")
+\keyword{ attribute.mut.inf }
+\keyword{ consolidate.entity.attribute }

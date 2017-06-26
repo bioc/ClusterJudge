@@ -5,16 +5,16 @@ Version: 0.99.0
 Date: 2017-02-15
 Author: Adrian Pasculescu
 Maintainer: Adrian Pasculescu <pasculescu@lunenfeld.ca>
-Description: ClusterJudge implements the functions, examples and other software published as an algorithm by Gibbons, F.D. and Roth F.P., (2002) in
-    "Judging the Quality of Gene Expression-Based Clustering Methods Using Gene Annotation" 
-    Genome Research, vol. 12, pp1574-1581.
+Description: ClusterJudge implements the functions, examples and other software published as an algorithm by Gibbons, FD and Roth FP,  in
+    "Judging the Quality of Gene Expression-Based Clustering Methods Using Gene Annotation". 
+    Genome Research, vol. 12, pp1574-1581. (2002)
     See package?ClusterJudge for an overview
-Depends: R (>= 2.10), stats, utils, graphics, infotheo, lattice, latticeExtra, httr, jsonlite
+Depends: R (>= 3.3), stats, utils, graphics, infotheo, lattice, latticeExtra, httr, jsonlite
 Suggests: yeastExpData,
     knitr,
-    rmarkdown
+    rmarkdown, devtools, testthat
 License: Artistic-2.0
-biocViews: Software, StatisticalMethod, Clustering
+biocViews: Software, StatisticalMethod, Clustering, GeneExpression, GO
 LazyLoad: yes
 LazyData: yes
 VignetteBuilder: knitr
