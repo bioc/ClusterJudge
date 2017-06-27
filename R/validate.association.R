@@ -1,8 +1,11 @@
 validate.association <-
 function(entity.attribute, message=TRUE){
   ### should have 2 columns
-  if(is.null(dim(entity.attribute)) | dim(entity.attribute)[2]!=2){
-  	stop('The entity attribute structure must have only 2 columns: first representing the entities (genes) and the second the attributes !')	
+  err.msg <- 'The entity attribute structure must have only 2 columns: first representing the entities (genes) and the second the attributes !'
+  if(is.null(dim(entity.attribute)) ){
+  	stop(err.msg)	
+  }	else {
+  	if( dim(entity.attribute)[2]!=2) stop(err.msg)
   }	
 
   ### should have no NA or NULL
