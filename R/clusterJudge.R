@@ -52,6 +52,7 @@ if(is.null(names(clusters))) stop('The clusters must have as names the entity na
     #### plot result
     plot(xyplot(c(MI,mi.RND[1:n.rnd],MI.RND.TOTAL)/MI~c(0:n.rnd,n.rnd+2)
       ,grid=TRUE,  cex=1.6, type=c('b')
+      , par.settings=list(par.sub.text=list(cex=0.7))
       ,xlab='Number of random swaps between original clusters' 
       ,ylab='Mutual Information - as a fraction of initial value'
   ,scales=list(x=list(cex=0.7, rot=45, at=c(0:(n.rnd+4)),labels=c(0,2^c(0:(n.rnd-1)),'...','full\nshuffle')))

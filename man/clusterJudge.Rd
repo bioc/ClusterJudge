@@ -87,7 +87,7 @@ str(mi.GO.Yeast)
 Yeast.GO.assocs.cons <- consolidate.entity.attribute(entity.attribute = Yeast.GO.assocs
                                                    , min.entities.per.attr =3
                                                    , mut.inf=mi.GO.Yeast
-                                                   , U.limit = c(0.8, 0.6, 0.4, 0.2, 0.1, 0.001)) 
+                                                   , U.limit = c(0.8, 0.1, 0.001)) 
                                                    
 #### apply clusterJudge for enntity attributes having a very low uncertainty (0.001)
 mi.by.swaps<-clusterJudge(clusters, entity.attribute=Yeast.GO.assocs.cons[["0.001"]]

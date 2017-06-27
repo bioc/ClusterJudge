@@ -159,7 +159,7 @@ Yeast.GO.assocs.cons <- consolidate.entity.attribute(
      entity.attribute = Yeast.GO.assocs
    , min.entities.per.attr =3
    , mut.inf=mi.GO.Yeast   ### use precalculated mutual information
-   , U.limit = c(0.01, 0.001) ### calculate consolidated association for these uncertainty levels
+   , U.limit = c(0.1, 0.001) ### calculate consolidated association for these uncertainty levels
    ) ### shows distribution of the number of pairs of attributes by Uncertainty 
 str(Yeast.GO.assocs.cons)                                                   
 ```
@@ -175,7 +175,7 @@ mutual information can be calculated using this function: *attribute.mut.inf* :
 ```{r}
 data(Yeast.GO.assocs) 
 ### because it takes time, we use a small sampled subset of associations
-entity.attribute.sampled <- Yeast.GO.assocs[sample(1:nrow(Yeast.GO.assocs),500),]
+entity.attribute.sampled <- Yeast.GO.assocs[sample(1:nrow(Yeast.GO.assocs),100),]
 mi.GO.Yeast.sampled <- attribute.mut.inf(
     entity.attribute = entity.attribute.sampled
   , show.progress    = FALSE  ## for this small example do not print progress

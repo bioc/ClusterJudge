@@ -57,10 +57,10 @@
 data(mi.GO.Yeast) ### is a precalculated example of mutual information for the Yeast genes and their Gene Ontollogy (GO) attributes
 str(mi.GO.Yeast)
 
-#### the following example will generate the mutual information of 500 sampled pairs of Yeast , GO associations 
+#### the following example will generate the mutual information of 100 sampled pairs of Yeast , GO associations 
 ####    (otherwise it might take take minutes or hours to calculate the mutual information)
 data(Yeast.GO.assocs) ### 
-entity.attribute.sampled <- Yeast.GO.assocs[sample(1:nrow(Yeast.GO.assocs),500),]
+entity.attribute.sampled <- Yeast.GO.assocs[sample(1:nrow(Yeast.GO.assocs),100),]
 mi.GO.Yeast.sampled <- attribute.mut.inf(entity.attribute.sampled, show.progress=TRUE)
 
 }

@@ -60,10 +60,15 @@ clusters <- ccyclered$Cluster
 ccyclered$SGDID <- sub('^S','S00',ccyclered$SGDID)
 names(clusters) <- ccyclered$SGDID
 
-data(Yeast.GO.assocs)
+data(Yeast.GO.assocs)  #### obtain associations and consolidate them at uncertainty level 0.001
+Yeast.GO.assocs.cons <- consolidate.entity.attribute(entity.attribute = Yeast.GO.assocs
+                                                   , min.entities.per.attr =3
+                                                   , mut.inf=mi.GO.Yeast
+                                                   , U.limit = c(0.001)) 
 
+#### calculate z.scores for the associations consolidated at 0.001 Uncertainty level
 z.scores <- clusterJudge.z.score(clusters
-                        , entity.attribute = Yeast.GO.assocs
+                        , entity.attribute = Yeast.GO.assocs.cons[[0.001]]
                         , nmb.randomizations=30)
 }
 \keyword{ clusterJudge }
