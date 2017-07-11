@@ -16,7 +16,7 @@ precalculated mutual information between Gene Ontology attributes of Yeast genes
      ..$ : chr [1:2266] "GO:0000001" "GO:0000002" "GO:0000009" "GO:0000011" ...
 }
 \details{
-    for convenienece this data set was pre-generated using attribute.mut.inf from this package
+    for convenienece this data set was pre-generated using attribute_mut_inf from this package
 }
 \value{
     This data loads a symetric matrix of mutual information values
@@ -26,7 +26,7 @@ precalculated mutual information between Gene Ontology attributes of Yeast genes
 Wikipedia: Mutual Information https://en.wikipedia.org/wiki/Mutual_information
 }
 \seealso{
-    \code{\link{attribute.mut.inf}}
+    \code{\link{attribute_mut_inf}}
 }
 \examples{
 data(mi.GO.Yeast)

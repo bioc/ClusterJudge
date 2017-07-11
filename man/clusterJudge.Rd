@@ -19,7 +19,7 @@
     when the of number of swaps is increased.
 }
 \usage{
-    clusterJudge(clusters, entity.attribute, plot.notes = "")
+    clusterJudge(clusters, entity.attribute, plot.notes = "", plot.saveRDS.file=NULL)
 }
 \arguments{
     \item{clusters}{
@@ -33,11 +33,15 @@
     And the second column represents `attributes` of entities (for example Gene Ontology ID 'GO:0007260' 
     which is `tyrosine phosphorylation of STAT protein`)
     Usually this is a consolidated entity.attribute where the attributes with very low number of entities 
-    or with very low mutual information have been removed (see consolidate.entity.attribute 
+    or with very low mutual information have been removed (see consolidate_entity_attribute 
     and the definition of Uncertainty on attributes mutual information)   
 }
     \item{plot.notes}{
     a string that will be added to the plot as explanation of what clustering represents.
+}
+    \item{plot.saveRDS.file}{
+    if not NULL must be a string represented a file location where the plot will be saved as an RDS object.
+    The plot can be then retrieved at any time using readRDS function.
 }
 }
 \value{
@@ -60,7 +64,7 @@
 }
 
 \seealso{
-    \code{\link{consolidate.entity.attribute}}
+    \code{\link{consolidate_entity_attribute}}
     \code{\link{help}}
 }
 \examples{
@@ -84,7 +88,7 @@ str(mi.GO.Yeast)
 
 ### consolidate (reduce) the number of attributes by removing attributes with very few entities 
 ###    and removing ones very corelated (i.e. with high mutual information)
-Yeast.GO.assocs.cons <- consolidate.entity.attribute(entity.attribute = Yeast.GO.assocs
+Yeast.GO.assocs.cons <- consolidate_entity_attribute(entity.attribute = Yeast.GO.assocs
                                                    , min.entities.per.attr =3
                                                    , mut.inf=mi.GO.Yeast
                                                    , U.limit = c(0.8, 0.1, 0.001)) 
@@ -92,8 +96,12 @@ Yeast.GO.assocs.cons <- consolidate.entity.attribute(entity.attribute = Yeast.GO
 #### apply clusterJudge for enntity attributes having a very low uncertainty (0.001)
 mi.by.swaps<-clusterJudge(clusters, entity.attribute=Yeast.GO.assocs.cons[["0.001"]]
                          , plot.notes='Yeast clusters judged at uncertainty level 0.001 - Ref: Tavazoie S,& all 
-`Systematic determination of genetic network architecture. Nat Genet. 1999`')  
+`Systematic determination of genetic network architecture. Nat Genet. 1999`'
+, plot.saveRDS.file= 'cj.rds') ### save the plot for later use  
+
+p <- readRDS('cj.rds') ### retrieve the previous plot
+pdf('cj.pdf'); plot(p); dev.off() ### plot on another device
 
 }
-\keyword{ attribute.mut.inf }
-\keyword{ consolidate.entity.attribute }
+\keyword{ attribute_mut_inf }
+\keyword{ consolidate_entity_attribute }
