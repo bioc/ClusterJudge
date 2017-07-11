@@ -1,4 +1,5 @@
-exportPattern("^[[:alpha:]]+")
+export(attribute_mut_inf, clusterJudge, clusterJudge_z_score, entities_attribute_stats, consolidate_entity_attribute
+, validate_association, download_Yeast_Go_terms, convert_Yeast_SGDId_2_systematic, download_Yeast_GO_mapping)
 importFrom(infotheo, entropy)
 import(lattice, latticeExtra, httr, jsonlite)
 importFrom("stats", "sd")

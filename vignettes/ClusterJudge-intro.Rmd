@@ -68,16 +68,16 @@ the clustering and each of the important and non-redundant attributes of entitie
 Gene Ontology is an example of a system of attributes that can help in assessing gene clustering resulting 
 from genomics or proteomics experiments.  
 A clustering that `agrees well` with a system of attributes should have a pronounced decrease of 
-the total mutual information when the of number of random swaps of entities between clusters 
+the total mutual information when the number of random swaps of entities between clusters 
 is increased [@GibRoth2002].
 
 
-The following simple steps must be performed to evaluate a clustering using ClusterJudge: 
-1. Obtain the clusters as a a structure containing entitities and their cluster IDs
-2. Obtain the entitity-attribute associations and verify the entitity-attribute associations for consistency
-3. . In most cases, the number of attributes can be consolidated (reduced) by using a set 
-of _uncertainty_ levels  
-4. 'Judge' the original clustering versus clustering of random changes that are applied to the original data
+The following simple steps must be performed to evaluate a clustering using ClusterJudge:
+
+1. Obtain the clusters as a structure containing entities and their cluster IDs;
+2. Obtain the entity-attribute associations and verify the entity-attribute associations for consistency;
+3. Often, the number of attributes can be consolidated (reduced) by using a set of _uncertainty_ levels;  
+4. 'Judge' the original clustering versus clustering of random changes that are applied to the original data.
 
 
 ## Obtaining the clustering
@@ -95,7 +95,7 @@ data(ccyclered)
 head(ccyclered)
 ```
 
-The clustering should not contain any ambiguites ( i.e. one entity should be assigned to just one cluster)
+The clustering should not contain any ambiguities ( i.e. one entity should be assigned to just one cluster)
 and no NA should be present.
 For this package, the clusters must be organized as a named vector:
 ```{r}
@@ -122,12 +122,22 @@ In the ClusterJudge R package there is already a downloaded mapping of Yeast gen
 data(Yeast.GO.assocs);
 str(Yeast.GO.assocs);
 head(Yeast.GO.assocs);
-validate.association(Yeast.GO.assocs)
+validate_association(Yeast.GO.assocs)
 ```
 
-The *download.Yeast.GO.mapping()* function is also available to download a fresh copy of the mapping. 
+The *download_Yeast_GO_mapping()* function is also available to download a fresh copy of the mapping. 
 
-The _validate.association()_ function quickly verifies if the input structure has two columns, 
+For other species one can use specialized R and Bioconductor packages such as biomaRt 
+as in the following `toy` example.
+```{r, eval=FALSE, echo=TRUE}
+library(biomaRt)
+rn <-  useDataset("rnorvegicus_gene_ensembl", mart=useMart("ensembl"))
+rgd.symbol=c("As3mt", "Borcs7", "Cyp17a1", "Wbp1l", "Sfxn2", "Arl3") ### exemplify for a limited set of  genes
+entity.attr  <- getBM(attributes=c('rgd_symbol','go_id'), filters='rgd_symbol', values=rgd.symbol, mart=rn)
+```
+
+
+The _validate_association()_ function quickly verifies if the input structure has two columns, 
 if there are no NAs or NULLs and if there are no duplicated associations.
 
 ## Consolidating Entity-Attribute associations
@@ -139,8 +149,8 @@ For the first case a consolidated association will ignore those attributes that 
 (*min.entities.per.attr*) 
 
 ```{r, fig.width=6, fig.height=4}
-entities.attribute.stats(Yeast.GO.assocs) ### shows number of entities per attribute distribution
-Yeast.GO.assocs.cons1 <- consolidate.entity.attribute(
+entities_attribute_stats(Yeast.GO.assocs) ### shows number of entities per attribute distribution
+Yeast.GO.assocs.cons1 <- consolidate_entity_attribute(
        entity.attribute = Yeast.GO.assocs
      , min.entities.per.attr =3  ### keep only attributes associated to 3 or more entities
      , mut.inf=FALSE
@@ -155,7 +165,7 @@ of mutual information.
 
 ```{r, fig.width=6, fig.height=4}
 data(mi.GO.Yeast)
-Yeast.GO.assocs.cons <- consolidate.entity.attribute(
+Yeast.GO.assocs.cons <- consolidate_entity_attribute(
      entity.attribute = Yeast.GO.assocs
    , min.entities.per.attr =3
    , mut.inf=mi.GO.Yeast   ### use precalculated mutual information
@@ -170,13 +180,13 @@ of clusters will be performed.
 
 ## Calculating the mutual information 
 In the case where the entity-attributes associations are downloaded from other organisms or other sources,
-mutual information can be calculated using this function: *attribute.mut.inf* :
+mutual information can be calculated using this function: *attribute_mut_inf* :
 
 ```{r}
 data(Yeast.GO.assocs) 
 ### because it takes time, we use a small sampled subset of associations
 entity.attribute.sampled <- Yeast.GO.assocs[sample(1:nrow(Yeast.GO.assocs),100),]
-mi.GO.Yeast.sampled <- attribute.mut.inf(
+mi.GO.Yeast.sampled <- attribute_mut_inf(
     entity.attribute = entity.attribute.sampled
   , show.progress    = FALSE  ## for this small example do not print progress
   )  
@@ -192,7 +202,7 @@ where H is the entropy.
 The _clusters_ named vector prepared above and one of the consolidated entity-attribute
 associations (for example the one at 0.001 level of Uncertainty) are needed at this step.
 The _ClusterJudge_ will swap at random more and more entities between clusters and will calculate
-and plot the new total mutual information for each iteration. 
+and plot the new total mutual information obtained at each iteration. 
 If the total mutual information decreases by increasing the number of random swaps we can conclude 
 that there is a good agreement between the clustering of experimental data and the ensemble of information 
 provided by the entity-attribute associations.
@@ -202,12 +212,24 @@ mi.by.swaps<-clusterJudge(
     clusters = clusters
   , entity.attribute=Yeast.GO.assocs.cons[["0.001"]]
   , plot.notes='Yeast clusters judged at uncertainty level 0.001 - Ref: Tavazoie S,& all 
-`Systematic determination of genetic network architecture. Nat Genet. 1999`')  
-```
+`Systematic determination of genetic network architecture. Nat Genet. 1999`'
+, plot.saveRDS.file= 'cj.rds') ### save the plot for later use  
 
-The oposite case (total mutual information does not decrease), and only when experimental data and clustering
-are very reliable, might suggest novel discoveries that contradict information accumulated in time into 
-entity-attribute associations.
+p <- readRDS('cj.rds') ### retrieve the previous plot
+pdf('cj.pdf'); plot(p); dev.off() ### plot on another device
+```
+In most of the cases mutual information should have a decreasing trend when the number of shuffles increases.
+However, in rare cases, a consistent increasing trend might suggest novel discoveries; only when both experimental data 
+and clustering are *very reliable*. In these rare cases a *high confident* clustering  might complement or even contradict 
+information accumulated in time into entity-attribute associations.
+
+
+*ClusterJudge* can also be seen as a complement to many of the Bioconductor packages
+related to evaluation and comparison of Clustering (such as [clustComp](http://www.bioconductor.org/packages/devel/bioc/html/clustComp.html ), 
+[clusterExperiment](http://www.bioconductor.org/packages/devel/bioc/html/clusterExperiment.html ), 
+[clusterSignificance](http://www.bioconductor.org/packages/devel/bioc/html/ClusterSignificance.html ),
+[GOpro](http://www.bioconductor.org/packages/devel/bioc/html/GOpro.html ), 
+[multiClust](http://www.bioconductor.org/packages/devel/bioc/html/multiClust.html ) ).
 
 ## References
 
