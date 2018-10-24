@@ -20,7 +20,7 @@ eat <- eat[,apply(eat,2,sum)>0]
 
 
 ##### z-score definition
-#####   z = (MIreal − mean(MIrandom.unif.size))/srandom   (where s_random is the stdev of MI_random.unif.size)
+#####  z = (MIreal - mean(MIrandom_unif_size ))/s_random where s_random is the stdev of MIrandom_unif_size
 #####   to maximize randomness take the same number of clusters but with aprox same size 
 ####  calculate z score and show plots 
 no.clust      <- length(unique(clusters))  ### the number of clusters
