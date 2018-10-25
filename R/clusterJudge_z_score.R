@@ -19,10 +19,10 @@ eat <- eat[,apply(eat,2,sum)>0]
     if(dim(eat)[2] <=0 ) stop('No attributes found in the entity.attribute table for the clustered entities !')
 
 
-##### z-score definition
-#####  z = (MIreal - mean(MIrandom_unif_size ))/s_random where s_random is the stdev of MIrandom_unif_size
+##### z score definition:
+##### (MI_real - mean(MI_random_unif))/stdev_rand_unif
 #####   to maximize randomness take the same number of clusters but with aprox same size 
-####  calculate z score and show plots 
+#####  calculate z score and show plots 
 no.clust      <- length(unique(clusters))  ### the number of clusters
 RND.clust.size <- round(length(clusters)/no.clust) ### the size of the random clusters (as uniform as possible)
 N.RND <- nmb.randomizations   ### number of randomizations
