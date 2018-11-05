@@ -1,18 +1,19 @@
 Package: ClusterJudge
 Type: Package
 Title: Judging Quality of Clustering Methods using Mutual Information
-Version: 0.99.3
+Version: 1.5.0
 Date: 2017-02-15
 Author: Adrian Pasculescu
 Maintainer: Adrian Pasculescu <pasculescu@lunenfeld.ca>
-Description: ClusterJudge implements the functions, examples and other software published as an algorithm by Gibbons, FD and Roth FP. 
-    The article is called "Judging the Quality of Gene Expression-Based Clustering Methods Using Gene Annotation" and 
-    it appeared in Genome Research, vol. 12, pp1574-1581 (2002).
-    See package?ClusterJudge for an overview.
-Depends: R (>= 3.4), stats, utils, graphics, infotheo, lattice, latticeExtra, httr, jsonlite
-Suggests: yeastExpData,
-    knitr,
-    rmarkdown, devtools, testthat, biomaRt
+Description: ClusterJudge implements the functions, examples and other
+        software published as an algorithm by Gibbons, FD and Roth FP.
+        The article is called "Judging the Quality of Gene
+        Expression-Based Clustering Methods Using Gene Annotation" and
+        it appeared in Genome Research, vol. 12, pp1574-1581 (2002).
+        See package?ClusterJudge for an overview.
+Depends: R (>= 3.4), stats, utils, graphics, infotheo, lattice,
+        latticeExtra, httr, jsonlite
+Suggests: yeastExpData, knitr, rmarkdown, devtools, testthat, biomaRt
 License: Artistic-2.0
 biocViews: Software, StatisticalMethod, Clustering, GeneExpression, GO
 LazyLoad: yes
