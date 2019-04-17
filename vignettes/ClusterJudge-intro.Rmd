@@ -17,7 +17,7 @@ references:
   container-title: Genome Research
   id: GibRoth2002
   issued:
-    month: October
+    month: 10
     volume: 12
     year: 2002
   publisher: Genome Research
@@ -28,7 +28,7 @@ references:
   container-title: Molecular Cell
   id: Cho1998
   issued:
-    month: July
+    month: 7
     volume: 2
     year: 1998
   publisher: Science Direct
@@ -39,7 +39,7 @@ references:
   container-title: Nature Genetics
   id: Taivasoie1999
   issued:
-    month: July
+    month: 7
     volume: 22
     year: 1999
   publisher: Nature Publishing Group
@@ -50,7 +50,7 @@ references:
   container-title: book
   id: Cover1991
   issued:
-    month: 
+    month: 1
     volume: (ed. D.L. Schilling)
     year: 1991
   publisher: Wiley-Interscience
