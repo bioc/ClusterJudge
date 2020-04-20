@@ -12,7 +12,7 @@
 }
 \usage{
 download_Yeast_GO_mapping(
-    yeast.GO.url = "http://downloads.yeastgenome.org/curation/literature/gene_association.sgd.gz")
+    yeast.GO.url = "http://downloads.yeastgenome.org/curation/literature/gene_association.sgd.gaf.gz")
 }
 \arguments{
     \item{yeast.GO.url}{
