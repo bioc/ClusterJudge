@@ -4,7 +4,7 @@ function(yeast.GO.url='http://downloads.yeastgenome.org/curation/literature/gene
   GO.assocs.all  <- read.table(textConnection(readLines(gzcon(url(yeast.GO.url))))
                          ,header=FALSE,check.names=FALSE, stringsAsFactors=FALSE, sep="\t", quote=NULL, comment.char ='!'
                          ,col.names=c("Database","SGDID","DB_Object_Symbol","NOT","GOID","DB:Ref","Evidence"
-                                     ,"With:From","GO_Aspect","DB_Object_Name","Synonym","Type","Taxon","Date","Asigned By","Notes 1","Notes 2"))
+                                     ,"With:From","GO_Aspect","DB_Object_Name","Synonym","Type","Taxon","Date","Asigned By","Notes 1"))
   ### use only most important columns "SGDID", "DB_Object_Symbol", "GOID"
   GO.assocs <- GO.assocs.all[,match(c("SGDID", "GOID"),colnames(GO.assocs.all))]
   ### one can filter for a certain evidence like IDA : Inferred from Direct Assay 
