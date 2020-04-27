@@ -1,7 +1,7 @@
 Package: ClusterJudge
 Type: Package
 Title: Judging Quality of Clustering Methods using Mutual Information
-Version: 1.9.0
+Version: 1.10.0
 Date: 2020-04-22
 Author: Adrian Pasculescu
 Maintainer: Adrian Pasculescu <a.pasculescu@gmail.com>
