@@ -3,8 +3,12 @@ function(yeast.GO.url='http://downloads.yeastgenome.org/curation/literature/gene
   ##### download Yeast Gene Ontology mapping  http://downloads.yeastgenome.org/curation/literature/gene_association.sgd.gaf.gz
   GO.assocs.all  <- read.table(textConnection(readLines(gzcon(url(yeast.GO.url))))
                          ,header=FALSE,check.names=FALSE, stringsAsFactors=FALSE, sep="\t", quote=NULL, comment.char ='!'
-                         ,col.names=c("Database","SGDID","DB_Object_Symbol","NOT","GOID","DB:Ref","Evidence"
-                                     ,"With:From","GO_Aspect","DB_Object_Name","Synonym","Type","Taxon","Date","Asigned By","Notes 1"))
+                         )
+  my.col.names <- c("Database","SGDID","DB_Object_Symbol","NOT","GOID","DB:Ref","Evidence"
+                                     ,"With:From","GO_Aspect","DB_Object_Name","Synonym","Type","Taxon","Date","Asigned By","Notes 1")
+  GO.assocs.all <- GO.assocs.all[,1:length(my.col.names)] ### sometimes there are empty extra columns
+  colnames(GO.assocs.all) <- my.col.names
+
   ### use only most important columns "SGDID", "DB_Object_Symbol", "GOID"
   GO.assocs <- GO.assocs.all[,match(c("SGDID", "GOID"),colnames(GO.assocs.all))]
   ### one can filter for a certain evidence like IDA : Inferred from Direct Assay 
