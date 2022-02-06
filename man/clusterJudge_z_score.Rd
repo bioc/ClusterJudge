@@ -74,7 +74,7 @@ Yeast.GO.assocs.cons <- consolidate_entity_attribute(entity.attribute = Yeast.GO
 
 #### calculate z.scores for the associations consolidated at 0.001 Uncertainty level
 z.scores <- clusterJudge_z_score(clusters
-                        , entity.attribute = Yeast.GO.assocs.cons[[0.001]]
+                        , entity.attribute = Yeast.GO.assocs.cons[["0.001"]]
                         , nmb.randomizations=30)
 }
 \keyword{ clusterJudge }
